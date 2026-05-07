@@ -64,3 +64,4 @@ C:\Users\PC\Desktop\Mini-Projets\Calculatrice Angular-CSharp\c#-Project\obj\Debu
 C:\Users\PC\Desktop\Mini-Projets\Calculatrice Angular-CSharp\c#-Project\obj\Debug\net8.0\c#-Project.pdb
 C:\Users\PC\Desktop\Mini-Projets\Calculatrice Angular-CSharp\c#-Project\obj\Debug\net8.0\c#-Project.genruntimeconfig.cache
 C:\Users\PC\Desktop\Mini-Projets\Calculatrice Angular-CSharp\c#-Project\obj\Debug\net8.0\ref\c#-Project.dll
+C:\Users\PC\Desktop\Mini-Projets\Calculatrice Angular-CSharp\c#-Project\obj\Debug\net8.0\c#-Project.sourcelink.json

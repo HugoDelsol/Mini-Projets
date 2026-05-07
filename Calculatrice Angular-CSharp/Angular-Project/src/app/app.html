@@ -4,6 +4,11 @@
 <input #B type="number">
 <input #O type="text"> <br>
 
+@for (btn of buttons; track btn.id ){
+    <button (click)="variableSave(btn.valeur)">
+        {{btn.valeur}}
+    </button>
+}
 <button    
     (click)="testCalcul(A.value, B.value, O.value)">
     TestCalcul
