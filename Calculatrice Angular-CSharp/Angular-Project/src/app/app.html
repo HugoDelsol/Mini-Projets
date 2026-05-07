@@ -1,0 +1,23 @@
+<h1>Ma Calculatrice</h1>
+
+<input #A type="number">
+<input #B type="number">
+<input #O type="text"> <br>
+
+<button    
+    (click)="testCalcul(A.value, B.value, O.value)">
+    TestCalcul
+</button><br>
+<button
+    [style.backgroundColor]="color"
+    (click)="testGet()">
+    TestConnexion
+</button> 
+
+<div>{{isConnected}}</div>
+
+@if (resultCalculate) {
+    <div>Resultat : {{resultCalculate}}</div>
+} @else {
+    <div>{{errorCalculate}}</div>
+}
