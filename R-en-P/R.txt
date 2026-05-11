@@ -1,0 +1,65 @@
+# Calcul de la fonte de neige (méthode simplifiée)
+calculer_fonte <- function(temperature, seuil_fonte = 0, facteur = 3.5) {
+  if (temperature > seuil_fonte) {
+    fonte <- facteur * (temperature - seuil_fonte)
+  } else {
+    fonte <- 0
+  }
+  return(fonte)
+}
+
+# Test sur une liste de températures
+temps <- c(-2.5, 2.0, 5.5)
+resultats <- sapply(temps, calculer_fonte)
+print(resultats)
+
+=======================
+=======================
+=======================
+=======================
+
+# Données de hauteur d'eau (en mètres)
+mesures <- data.frame(
+  heure = 1:5,
+  hauteur = c(1.2, 1.5, 2.1, 2.4, 1.8)
+)
+
+seuil <- 2.0
+
+# Filtrage et moyenne des alertes
+alertes <- mesures[mesures$hauteur > seuil, ]
+moyenne_alerte <- mean(alertes$hauteur)
+
+print(alertes)
+print(moyenne_alerte)
+
+
+=============================
+=============================
+=============================
+
+# Niveaux de vigilance (en mètres)
+JAUNE <- 1.5
+ORANGE <- 2.5
+ROUGE <- 4.0
+
+evaluer_risque <- function(hauteur) {
+  if (hauteur >= ROUGE) {
+    return("ROUGE")
+  } else if (hauteur >= ORANGE) {
+    return("ORANGE")
+  } else if (hauteur >= JAUNE) {
+    return("JAUNE")
+  } else {
+    return("VERT")
+  }
+}
+
+# Mesures reçues
+stations <- c("Isère", "Drac", "Romanche")
+releves <- c(1.2, 3.2, 0.5)
+
+# Application (version simplifiée)
+resultats <- sapply(releves, evaluer_risque)
+names(resultats) <- stations
+print(resultats)
