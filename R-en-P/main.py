@@ -168,39 +168,62 @@
 # stationHydrometrique = StationHydrometrique(15.5, 0.05)
 # test = stationHydrometrique.calculerDebitStation(data)
 
-import numpy as np
+# import numpy as np
+# import pandas as pd
+
+# class StationHydrometrique:
+#     def __init__(self, coeff_a, seuil_bruit):
+#         self.coeff_a = coeff_a
+#         self.seuil_bruit = seuil_bruit
+
+#     def calculer_debit_station(self, releves_bruts):
+#         # 1. Conversion et nettoyage
+#         df = np.array(releves_bruts)
+#         df = pd.DataFrame(releves_bruts, columns=["hauteur"])
+        
+#         # On ne garde que les valeurs au-dessus du seuil de bruit
+#         donnees_filtrees = df.loc[df["hauteur"] > self.seuil_bruit]
+
+#         # 2. Vérification de la fiabilité (Règle des 50%)
+#         if len(donnees_filtrees) < len(releves_bruts) / 2:
+#             print("Alerte : Trop de données aberrantes, calcul annulé.")
+#             return None
+
+#         # 3. Calcul vectorisé du débit (Q = a * H^2)
+#         # On travaille directement sur la colonne pour la performance
+#         debits = self.coeff_a * (donnees_filtrees["hauteur"] ** 2)
+
+#         # 4. Résultat
+#         max_debit = debits.max()
+#         print(f"Débit max calculé : {max_debit:.2f} m3/s")
+#         return debits
+
+# # --- Exécution ---
+# data = [0.01, 1.2, 0.8, -0.5, 2.1, 0.04, -1.0]
+# station = StationHydrometrique(15.5, 0.05)
+# station.calculer_debit_station(data)
+
 import pandas as pd
 
-class StationHydrometrique:
-    def __init__(self, coeff_a, seuil_bruit):
-        self.coeff_a = coeff_a
-        self.seuil_bruit = seuil_bruit
+class AnalyseurCrue:
 
-    def calculer_debit_station(self, releves_bruts):
-        # 1. Conversion et nettoyage
-        df = np.array(releves_bruts)
-        df = pd.DataFrame(releves_bruts, columns=["hauteur"])
-        
-        # On ne garde que les valeurs au-dessus du seuil de bruit
-        donnees_filtrees = df.loc[df["hauteur"] > self.seuil_bruit]
+    def __init__(self, seuil=0.5):
+        self.seuil = seuil
 
-        # 2. Vérification de la fiabilité (Règle des 50%)
-        if len(donnees_filtrees) < len(releves_bruts) / 2:
-            print("Alerte : Trop de données aberrantes, calcul annulé.")
-            return None
+    def differentiel(self, df):
+        df['variation'] = df["hauteur"].diff()
 
-        # 3. Calcul vectorisé du débit (Q = a * H^2)
-        # On travaille directement sur la colonne pour la performance
-        debits = self.coeff_a * (donnees_filtrees["hauteur"] ** 2)
+        alerte = df.loc[df['variation'] > self.seuil]
 
-        # 4. Résultat
-        max_debit = debits.max()
-        print(f"Débit max calculé : {max_debit:.2f} m3/s")
-        return debits
-
-# --- Exécution ---
-data = [0.01, 1.2, 0.8, -0.5, 2.1, 0.04, -1.0]
-station = StationHydrometrique(15.5, 0.05)
-station.calculer_debit_station(data)
+        for ligne in alerte.itertuples():
+            print(f"⚠️  Alerte : Variation de {ligne.variation:.2f}m détectée à {ligne.heure} heure")
 
 
+data = {
+    'heure': [1, 2, 3, 4, 5],
+    'hauteur' : [2.5, 6, 0.4, 8, 3]
+}
+
+df = pd.DataFrame(data)
+modele = AnalyseurCrue()
+modele.differentiel(df)
